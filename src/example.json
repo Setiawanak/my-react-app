@@ -1,0 +1,48 @@
+{
+  "id": "",
+  "name": "",
+  "date": "",
+  "auditor": "",
+  "auditee": "",
+  "grade": 0,
+  "question_categories": [
+    {
+      "category_name": "Sikap dan Penampilan",
+      "questions": [
+        {
+          "question": "Petugas mengucapkan greetings",
+          "answer": "",
+          "remarks": ""
+        },
+        {
+          "question": "penampilan petugas sesuai dengan prosedur dan atribut lengkap",
+          "answer": "",
+          "remarks": ""
+        }
+      ]
+    }
+  ],
+  "signer": [
+    {
+      "user_id": "id-user-auditor",
+      "role": "auditor",
+      "sign_path": "public/asdas/ttd.png"
+    },
+    {
+      "user_id": "id-user-auditor",
+      "role": "auditor",
+      "sign_path": "public/asdas/ttd.png"
+    },
+    {
+      "user_id": "id-user-auditor",
+      "role": "auditor",
+      "sign_path": "public/asdas/ttd.png"
+    },
+    {
+      "user_id": "id-user-auditor",
+      "role": "auditor",
+      "sign_path": "public/asdas/ttd.png"
+    }
+  ],
+  "document_path": "public/document/blabla.pdf"
+}
