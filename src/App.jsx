@@ -1,32 +1,121 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React, { useState } from "react";
+import SignatureCanvas from "./components/SignaturePad";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
-function App() {
-  const [count, setCount] = useState(0);
+import './App.css';
+import dummy from "./example.json";
+
+const App = () => {
+  const [formData, setFormData] = useState({
+    question1: { answer: "", remarks: "" },
+    // Tambahkan state untuk pertanyaan lainnya
+  });
+
+  console.log(dummy);
+
+  const handleInputChange = (question, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [question]: { ...prev[question], [field]: value },
+    }));
+  };
+
+  const generatePDF = async () => {
+    const input = document.getElementById("form-content");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 210;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    pdf.save("audit-report.pdf");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count - 1)}>
-          count is {count}
+    <div className="wrapper">
+      <div className="a4-container">
+        <h1 style={{marginBottom: "10px"}}>CHECKLIST AUDIT VISIT REPORT</h1>
+
+        <div style={{display: "flex"}}>
+          <div style={{width: "50%"}}>
+            <div>
+              <label>Nama:</label>
+              <input type="text" />
+            </div>
+            <div>
+              <label>Hari/Tanggal:</label>
+              <input type="date" />
+            </div>
+          </div>
+
+          <div style={{width: "50%"}}>
+          <div>
+              <label>Auditor:</label>
+              <input type="text" />
+            </div>
+            <div>
+              <label>Auditee:</label>
+              <input type="text" />
+            </div>
+          </div>
+        </div>
+
+        {/* Section 1 */}
+        <div style={{ margin: "20px 0" }}>
+          <h2>Lokasi</h2>
+          {dummy.question_categories.map(category => (
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Pertanyaan</th>
+                  <th>Y</th>
+                  <th>N</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                {category.questions.map((question, index) => (
+                  <tr>
+                    <td style={{textAlign: "center"}}>{index + 1}</td>
+                    <td>{question.question}</td>
+                    <td style={{textAlign: "center"}}>
+                      <input type="checkbox" />
+                    </td>
+                    <td style={{textAlign: "center"}}>
+                      <input type="checkbox" />
+                    </td>
+                    <td style={{textAlign: "center"}}>
+                      <input type="text" style={{width: "calc(100% - 15px)"}} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ))}
+        </div>
+
+        {/* Tanda Tangan */}
+        <div style={{ display: "flex", width:"100%", padding: "0 20px", gap: "20px", justifyContent: "space-around", overflowX: "auto" }}>
+          {dummy.signer.map(signer => (<SignatureCanvas signer={signer} />))}
+        </div>
+
+        <button
+          onClick={generatePDF}
+          style={{
+            marginTop: "20px",
+            padding: "10px 20px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+          }}
+        >
+          Export to PDF
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">Klik disini</p>
-    </>
+    </div>
   );
 }
 
