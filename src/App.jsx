@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import SignatureCanvas from "./components/SignaturePad";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -65,36 +65,38 @@ const App = () => {
 
         {/* Section 1 */}
         <div style={{ margin: "20px 0" }}>
-          <h2>Lokasi</h2>
           {dummy.question_categories.map(category => (
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Pertanyaan</th>
-                  <th>Y</th>
-                  <th>N</th>
-                  <th>Keterangan</th>
-                </tr>
-              </thead>
-              <tbody>
-                {category.questions.map((question, index) => (
+            <Fragment>  
+              <h4>{category.order}. {category.category_name}</h4>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
                   <tr>
-                    <td style={{textAlign: "center"}}>{index + 1}</td>
-                    <td>{question.question}</td>
-                    <td style={{textAlign: "center"}}>
-                      <input type="checkbox" />
-                    </td>
-                    <td style={{textAlign: "center"}}>
-                      <input type="checkbox" />
-                    </td>
-                    <td style={{textAlign: "center"}}>
-                      <input type="text" style={{width: "calc(100% - 15px)"}} />
-                    </td>
+                    <th>No.</th>
+                    <th>Pertanyaan</th>
+                    <th>Y</th>
+                    <th>N</th>
+                    <th>Keterangan</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {category.questions.map((question, index) => (
+                    <tr>
+                      <td style={{textAlign: "center"}}>{index + 1}</td>
+                      <td>{question.question}</td>
+                      <td style={{textAlign: "center"}}>
+                        <input type="checkbox" />
+                      </td>
+                      <td style={{textAlign: "center"}}>
+                        <input type="checkbox" />
+                      </td>
+                      <td style={{textAlign: "center"}}>
+                        <input type="text" style={{width: "calc(100% - 15px)"}} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Fragment>
           ))}
         </div>
 
