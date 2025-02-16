@@ -36,8 +36,12 @@ const App = () => {
 
   return (
     <div className="wrapper">
-      <div className="a4-container">
-        <h1 style={{marginBottom: "10px"}}>CHECKLIST AUDIT VISIT REPORT</h1>
+      <div className="a4-container" style={{ position: "relative" }}>
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <h1 style={{marginBottom: "10px"}}>CHECKLIST AUDIT VISIT REPORT</h1>
+        </div>
+
+        <img src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg" style={{ width: "100px", position: "absolute", top: "10px", right: "10px" }} />
 
         <div style={{display: "flex"}}>
           <div style={{width: "50%"}}>
